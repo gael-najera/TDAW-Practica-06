@@ -21,7 +21,7 @@ public class ProductService {
     public List<Product> findAll() {
         String sql = "SELECT p.id_producto as productId, p.nombre as name, p.precio as price, " +
                 "p.stock as stock, c.id_categoria as categoryId, c.nombre as categoryName " +
-                "FROM productos p " +
+                "FROM productos1 p " +
                 "LEFT JOIN productos_categorias pc ON p.id_producto = pc.id_producto " +
                 "LEFT JOIN categorias c ON pc.id_categoria = c.id_categoria";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
@@ -30,7 +30,7 @@ public class ProductService {
     public Product findById(int id) {
         String sql = "SELECT p.id_producto as productId, p.nombre as name, p.precio as price, " +
                 "p.stock as stock, c.id_categoria as categoryId, c.nombre as categoryName " +
-                "FROM productos p " +
+                "FROM productos1 p " +
                 "LEFT JOIN productos_categorias pc ON p.id_producto = pc.id_producto " +
                 "LEFT JOIN categorias c ON pc.id_categoria = c.id_categoria " +
                 "WHERE p.id_producto = ?";
@@ -43,7 +43,7 @@ public class ProductService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO productos(nombre, precio, stock) VALUES (?, ?, ?)",
+                    "INSERT INTO productos1(nombre, precio, stock) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
             ps.setString(1, product.getName());
@@ -65,7 +65,7 @@ public class ProductService {
     public void update(Product product) {
         // Actualizar producto
         jdbcTemplate.update(
-                "UPDATE productos SET nombre = ?, precio = ?, stock = ? WHERE id_producto = ?",
+                "UPDATE productos1 SET nombre = ?, precio = ?, stock = ? WHERE id_producto = ?",
                 product.getName(), product.getPrice(), product.isStock(), product.getProductId()
         );
 
